@@ -1,0 +1,33 @@
+#grid {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  width: 90vw;
+  height: 90vw;
+}
+#grid > div {
+  border: 1px solid black;
+  background-color: tan;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  border: 2px solid black;
+  margin: auto auto;
+}
+
+#king {
+  border: 3px solid red;
+}
+
+.white {
+  background-color: white;
+}
+
+.black {
+  background-color: black;
+}
+
+/*# sourceMappingURL=output.css.map */
