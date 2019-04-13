@@ -1,13 +1,12 @@
-#grid {
+#board {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
   width: 90vw;
   height: 90vw;
 }
-#grid > div {
-  border: 1px solid black;
-  background-color: tan;
+#board > div {
+  background-size: cover;
 }
 
 .circle {
@@ -18,16 +17,28 @@
   margin: auto auto;
 }
 
-#king {
-  border: 3px solid red;
+.king {
+  background-image: url("../img/king.jpg");
 }
 
 .white {
-  background-color: white;
+  background-image: url("../img/white.jpg");
 }
 
 .black {
-  background-color: black;
+  background-image: url("../img/black.jpg");
+}
+
+.empty {
+  background-image: url("../img/empty.jpg");
+}
+
+.victory {
+  background-image: url("../img/victory.jpg");
+}
+
+.goal {
+  background-image: url("../img/goal.jpg");
 }
 
 /*# sourceMappingURL=output.css.map */

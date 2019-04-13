@@ -1,42 +1,103 @@
-const board= document.getElementById('grid');
-makeGrid();
-addPieces();
-
-function makeGrid(){
-  for(let i=1; i<=121;i++){
-  let square=document.createElement('div');
-  square.setAttribute("id",`${i}`);
-  board.appendChild(square);
+class Board{
+  constructor(){
+  this.turn='black';
+  this.grid=[
+    ['goal','empty','empty','black','black','black','black','black','empty','empty','goal'],
+    ['empty','empty','empty','empty','empty','black','empty','empty','empty','empty','empty'],
+    ['empty','empty','empty','empty','empty','empty','empty','empty','empty','empty','empty'],
+    ['black','empty','empty','empty','empty','white','empty','empty','empty','empty','black'],
+    ['black','empty','empty','empty','white','white','white','empty','empty','empty','black'],
+    ['black','empty','empty','white','white','king','white','white','empty','empty','black'],
+    ['black','empty','empty','empty','white','white','white','empty','empty','empty','black'],
+    ['black','empty','empty','empty','empty','white','empty','empty','empty','empty','black'],
+    ['empty','empty','empty','empty','empty','empty','empty','empty','empty','empty','empty'],
+    ['empty','empty','empty','empty','empty','black','empty','empty','empty','empty','empty'],
+    ['goal','empty','empty','black','black','black','black','black','empty','empty','goal']
+  ];
+  this.selected={};
   }
+
+  startGame(){
+    const board= document.getElementById('board');
+    for(let x=0;x<=10;x++){
+      for(let y=0;y<=10;y++){
+        let cell=document.createElement('div');
+        cell.classList.add(`${this.grid[x][y]}`);
+        board.appendChild(cell);
+        cell.addEventListener("click", ()=>{
+          this.selected.row=x;
+          this.selected.col=y;
+          console.log(this.selected,this.grid[x][y])
+        });
+      };
+    };
+  };
 }
+let newGame= new Board();
+newGame.startGame();
+  //
+  // checkRow(x1,x2){
+  //
+  //   if (x1>x2){
+  //     for(let i=x1,i<=x2;i++){
+  //       if this.grid[i]
+  //     }
+  //   } else if (x2>x1){
+  //
+  //   }
+  //
+  // }
+  // startGame(){
+  //   this.grid
+  // }
+  // changeTurn(){
+  //   let next='';
+  //   this.turn==='black' ? next='white' : next='black';
+  //   this.turn=next;
+  // }
+  // selectPiece(piece){
+  //   if(this.turn===piece.color){
+  //     this.selected=piece;
+  //   } else {
+  //     this.selected=null;
+  //   }
+  // }
+  //
+  // placePiece(gridId){
+  //
+  //   if()
+  //   this.selected.id=gridId;
+  // }
+  //   changeTurn();
+  // }
 
-function addPieces(){
-  const whiteArr=[39,49,50,51,59,60,61,62,63,71,72,73,83];
-  const blackArr=[4,5,6,7,8,17,34,45,56,57,67,78,44,55,65,66,77,88,114,115,116,117,118,105];
-  whiteArr.forEach(spot=>{
-    const piece=document.createElement('div');
-    piece.classList.add("circle");
-    piece.classList.add("white");
-    const location=document.getElementById(`${spot}`);
-    location.appendChild(piece);
-    if(spot===61){
-      piece.setAttribute("id","king");
-    }
-  });
-  blackArr.forEach(spot=>{
-    const piece=document.createElement('div');
-    piece.classList.add("circle");
-    piece.classList.add("black");
-    const location=document.getElementById(`${spot}`);
-    location.appendChild(piece);
-
-  });
-}
+// }
 
 
-movePiece(from,to){
-  let previous=document.getElementByI(`${from}`);
-  let current=document.getElementById(`${to}`);
-  let piece=previous.children;
 
-}
+// 
+// makeGrid();
+// addPieces();
+
+// function makeGrid(){
+//   for(let i=1; i<=121;i++){
+//   let square=document.createElement('div');
+//   square.setAttribute("id",`${i}`);
+//   board.appendChild(square);
+//   }
+// }
+//
+//
+//
+//
+// function selectPiece(id){
+//   let =document.getElementById(`${from}`);
+//   let current=document.getElementById(`${to}`);
+//   // select piece
+//   current.appendChild(piece);
+//   previous.removeChild(piece);
+// }
+//
+//
+//
+// movePiece(61,1);
