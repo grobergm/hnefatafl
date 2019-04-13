@@ -40,14 +40,20 @@ class Board{
         this.grid[x][y]=this.selected.piece;
         this.selected={piece:'empty'};
         this.updateView(x,y,cell,piece);
+      } else{
+        this.grid[this.selected.row][this.selected.col]=this.selected.piece;
+        this.updateView(this.selected.row,this.selected.col,this.selected.cell);
+        this.selected={piece:'empty'};
+        this.updateCursor();
       }
     } else {
       if(piece===this.turn || (piece==='king'&&this.turn==='white')){
         this.selected.row=x;
         this.selected.col=y;
         this.selected.piece=this.grid[x][y];
+        this.selected.cell=cell;
         this.grid[x][y]='empty';
-        this.updateView(x,y,cell,piece);
+        this.updateView(x,y,cell);
       }
     }
   }
@@ -103,13 +109,16 @@ class Board{
     }
   }
 
-  updateView(x,y,cell,piece){
+  updateView(x,y,cell){
     cell.setAttribute('class',this.grid[x][y]);
-    if(piece==='white'){
+    this.updateCursor()
+  }
+  updateCursor(){
+    if(this.selected.piece==='white'){
       board.setAttribute('class','selectedWhite');
-    } else if(piece==='black'){
+    } else if(this.selected.piece==='black'){
       board.setAttribute('class','selectedBlack');
-    } else if(piece==='king'){
+    } else if(this.selected.piece==='king'){
       board.setAttribute('class','selectedKing');
     } else {
       board.setAttribute('class','noneSelected');
