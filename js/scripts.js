@@ -34,23 +34,32 @@ class Board{
 
   move(x,y,piece,cell){
     if (this.selected.piece!=='empty'){
+
       this.grid[x][y]=this.selected.piece;
       this.selected={piece:'empty'};
-      this.updateClass(x,y,cell);
+      this.updateView(x,y,cell,piece);
     } else {
       this.selected.row=x;
       this.selected.col=y;
       this.selected.piece=this.grid[x][y];
       this.grid[x][y]='empty';
-      this.updateClass(x,y,cell);
+      this.updateView(x,y,cell,piece);
     }
     console.log(this.selected,this.grid);
   }
 
-  updateClass(x,y,piece){
-    piece.setAttribute('class',this.grid[x][y]);
+  updateView(x,y,cell,piece){
+    cell.setAttribute('class',this.grid[x][y]);
+    if(piece==='white'){
+      board.setAttribute('class','selectedWhite');
+    } else if(piece==='black'){
+      board.setAttribute('class','selectedBlack');
+    } else if(piece==='king'){
+      board.setAttribute('class','selectedKing');
+    } else {
+      board.setAttribute('class','noneSelected');
+    }
   }
-
 }
 let newGame= new Board();
 newGame.makeBoard();

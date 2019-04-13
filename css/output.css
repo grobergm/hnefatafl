@@ -9,6 +9,23 @@
   background-size: cover;
 }
 
+.selectedWhite {
+  cursor: url("../img/selectedWhite.png"), auto;
+}
+
+.selectedBlack {
+  cursor: url("../img/selectedBlack.png"), auto;
+}
+
+.selectedKing {
+  cursor: url("../img/selectedKing.png"), auto;
+}
+
+.noneSelected {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
 .circle {
   border-radius: 50%;
   width: 80%;
