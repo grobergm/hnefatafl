@@ -1,8 +1,9 @@
 const board= document.getElementById('board');
+const turnView= document.getElementById('turn');
 
 class Board{
   constructor(){
-  this.turn='black';
+  this.turn='white';
   this.grid=[
     ['goal','empty','empty','black','black','black','black','black','empty','empty','goal'],
     ['empty','empty','empty','empty','empty','black','empty','empty','empty','empty','empty'],
@@ -34,18 +35,72 @@ class Board{
 
   move(x,y,piece,cell){
     if (this.selected.piece!=='empty'){
-
-      this.grid[x][y]=this.selected.piece;
-      this.selected={piece:'empty'};
-      this.updateView(x,y,cell,piece);
+      if(this.moveIsValid(x,y)){
+        this.changeTurn(this.selected.piece);
+        this.grid[x][y]=this.selected.piece;
+        this.selected={piece:'empty'};
+        this.updateView(x,y,cell,piece);
+      }
     } else {
-      this.selected.row=x;
-      this.selected.col=y;
-      this.selected.piece=this.grid[x][y];
-      this.grid[x][y]='empty';
-      this.updateView(x,y,cell,piece);
+      if(piece===this.turn || (piece==='king'&&this.turn==='white')){
+        this.selected.row=x;
+        this.selected.col=y;
+        this.selected.piece=this.grid[x][y];
+        this.grid[x][y]='empty';
+        this.updateView(x,y,cell,piece);
+      }
     }
-    console.log(this.selected,this.grid);
+  }
+
+  changeTurn(piece){
+    console.log('turn change',piece,this.turn)
+    if(piece===('white'||'king')){
+      this.turn='black';
+      turnView.innerHTML="Black's Move";
+    } else if(piece==='black'){
+      this.turn='white';
+      turnView.innerHTML="White's Move";
+    }
+  }
+
+  moveIsValid(x,y){
+    if(x===this.selected.row || y===this.selected.col){
+      if(this.selected.row>x){
+        for(let i=this.selected.row;i>=x;i--){
+          if(this.grid[i][y]!=='empty'){
+            return false;
+          }
+        }
+        return true;
+      }
+      if(this.selected.row<x){
+        for(let i=this.selected.row;i<=x;i++){
+          if(this.grid[i][y]!=='empty'){
+            return false;
+          }
+        }
+        return true;
+      }
+      if(this.selected.col>y){
+        for(let i=this.selected.col;i>=y;i--){
+          if(this.grid[x][i]!=='empty'){
+            return false;
+          }
+        }
+        return true;
+      }
+      if(this.selected.col<y){
+        for(let i=this.selected.col;i<=y;i++){
+          if(this.grid[x][i]!=='empty'){
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+    else{
+      return false;
+    }
   }
 
   updateView(x,y,cell,piece){
