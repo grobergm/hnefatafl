@@ -144,10 +144,10 @@ class Board{
   changeTurn(){
     if(this.selected.piece==='white'||this.selected.piece==='king'){
       this.turn='black';
-      turnView.innerHTML="Black's Move";
+      turnView.innerHTML="Attacking Team";
     } else if(this.selected.piece==='black'){
       this.turn='white';
-      turnView.innerHTML="White's Move";
+      turnView.innerHTML="Defending Team";
     }
   }
 

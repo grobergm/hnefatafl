@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css?family=Lora');
+
+body{
+  width:100%;
+  padding:0;
+  margin:0;
+  text-align:center;
+  background-color:black;
+  color:white;
+  font-family: 'Lora', serif;
+}
+h1{
+  font-size:3rem;
+}
+h2 {
+  font-size:2rem;
+}
+
+p{
+  font-size:1rem;
+}
+
+a {
+  background-color:white;
+  color:black;
+  text-decoration: none;
+  padding:1rem;
+  border-radius:10px;
+}
+a:hover{
+  background-color:lightgray;
+  -webkit-transition:background-color 1s;
+  -webkit-transition:background-color 0.5s;
+  transition:background-color 0.5s;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  grid-gap:1px;
+  width: 95vw;
+  height: 95vw;
+  margin: 0 auto;
+}
+#board > div {
+  background-size:cover;
+}
+
+.selectedWhite {
+  cursor: url("../img/selectedWhiteSM.png"), auto;
+}
+
+.selectedBlack {
+  cursor: url("../img/selectedBlackSM.png"), auto;
+}
+
+.selectedKing {
+  cursor: url("../img/selectedKingSM.png"), auto;
+}
+
+.noneSelected {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  border: 2px solid black;
+  margin: auto auto;
+}
+
+.king {
+  background-image: url("../img/king.jpg");
+}
+
+.white {
+  background-image: url("../img/white.jpg");
+}
+
+.black {
+  background-image: url("../img/black.jpg");
+}
+
+.empty {
+  background-image: url("../img/empty.jpg");
+}
+
+.victory {
+  background-image: url("../img/victory.jpg");
+}
+
+.goal {
+  background-image: url("../img/goal.jpg");
+}
+
+@media screen and (min-width:800px){
+  h1{
+    font-size:5rem;
+  }
+  h2 {
+    font-size:3rem;
+  }
+  p {
+    font-size:1.5rem;
+  }
+  .selectedWhite {
+    cursor: url("../img/selectedWhite.png"), auto;
+  }
+
+  .selectedBlack {
+    cursor: url("../img/selectedBlack.png"), auto;
+  }
+
+  .selectedKing {
+    cursor: url("../img/selectedKing.png"), auto;
+  }
+}
