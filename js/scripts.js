@@ -18,6 +18,7 @@ class Board{
     ['goal','empty','empty','black','black','black','black','black','empty','empty','goal']
   ];
   this.selected={piece:'empty'};
+  this.destination={};
   }
 
   makeBoard(){
@@ -25,6 +26,7 @@ class Board{
       for(let y=0;y<=10;y++){
         let cell=document.createElement('div');
         cell.classList.add(`${this.grid[x][y]}`);
+        cell.setAttribute('id',`r${x}c${y}`);
         board.appendChild(cell);
         cell.addEventListener("click",()=>{
           this.move(x,y,this.grid[x][y],cell);
@@ -35,11 +37,16 @@ class Board{
 
   move(x,y,piece,cell){
     if (this.selected.piece!=='empty'){
-      if(this.moveIsValid(x,y)){
-        this.changeTurn(this.selected.piece);
+        this.destination.x=x;
+        this.destination.y=y;
+      if(this.moveIsValid()){
+        this.checkCapture(x,y,piece);
+        this.changeTurn();
         this.grid[x][y]=this.selected.piece;
         this.selected={piece:'empty'};
+        this.destination={};
         this.updateView(x,y,cell,piece);
+
       } else{
         this.grid[this.selected.row][this.selected.col]=this.selected.piece;
         this.updateView(this.selected.row,this.selected.col,this.selected.cell);
@@ -57,47 +64,100 @@ class Board{
       }
     }
   }
+  checkCapture(){
+    console.log(this.grid);
+    let x=this.destination.x;
+    let y=this.destination.y;
+    if(this.selected.piece==='black'){
+      if(this.grid[x+1][y]==='white'&&this.grid[x+2][y]==='black'){
+        console.log('capture');
+        this.grid[x+1][y]='empty';
+        let captured=document.getElementById(`r${x+1}c${y}`);
+        captured.setAttribute('class','empty');
+      }
+      if(this.grid[x-1][y]==='white'&&this.grid[x-2][y]==='black'){
+        console.log('capture');
+        this.grid[x-1][y]='empty';
+        let captured=document.getElementById(`r${x-1}c${y}`);
+        captured.setAttribute('class','empty');
+      }
+      if(this.grid[x][y+1]==='white'&&this.grid[x][y+2]==='black'){
+        console.log('capture');
+        this.grid[x][y+1]='empty';
+        let captured=document.getElementById(`r${x}c${y+1}`);
+        captured.setAttribute('class','empty');
+      }
+      if(this.grid[x][y-1]==='white'&&this.grid[x][y-2]==='black'){
+        console.log('capture');
 
-  changeTurn(piece){
-    console.log('turn change',piece,this.turn)
-    if(piece===('white'||'king')){
+        this.grid[x][y-1]='empty';
+        let captured=document.getElementById(`r${x}c${y-1}`);
+        captured.setAttribute('class','empty');
+      }
+    } else if(this.selected.piece==='white'||'king'){
+      if(this.grid[x+1][y]==='black'&&this.grid[x+2][y]==='white'){
+        this.grid[x+1][y]='empty';
+        let captured=document.getElementById(`r${x+1}c${y}`);
+        captured.setAttribute('class','empty');
+      }
+      if(this.grid[x-1][y]==='black'&&this.grid[x-2][y]==='white'){
+        this.grid[x-1][y]='empty';
+        let captured=document.getElementById(`r${x-1}c${y}`);
+        captured.setAttribute('class','empty');
+      }
+      if(this.grid[x][y+1]==='black'&&this.grid[x][y+2]==='white'){
+        this.grid[x][y+1]='empty';
+        let captured=document.getElementById(`r${x}c${y+1}`);
+        captured.setAttribute('class','empty');
+      }
+      if(this.grid[x][y-1]==='black'&&this.grid[x][y-2]==='white'){
+        this.grid[x][y-1]='empty';
+        let captured=document.getElementById(`r${x}c${y-1}`);
+        captured.setAttribute('class','empty');
+      }
+    }
+
+  }
+
+  changeTurn(){
+    if(this.selected.piece==='white'||this.selected.piece==='king'){
       this.turn='black';
       turnView.innerHTML="Black's Move";
-    } else if(piece==='black'){
+    } else if(this.selected.piece==='black'){
       this.turn='white';
       turnView.innerHTML="White's Move";
     }
   }
 
-  moveIsValid(x,y){
-    if(x===this.selected.row || y===this.selected.col){
-      if(this.selected.row>x){
-        for(let i=this.selected.row;i>=x;i--){
-          if(this.grid[i][y]!=='empty'){
+  moveIsValid(){
+    if(this.destination.x===this.selected.row || this.destination.y===this.selected.col){
+      if(this.selected.row>this.destination.x){
+        for(let i=this.selected.row;i>=this.destination.x;i--){
+          if(this.grid[i][this.destination.y]!=='empty'){
             return false;
           }
         }
         return true;
       }
-      if(this.selected.row<x){
-        for(let i=this.selected.row;i<=x;i++){
-          if(this.grid[i][y]!=='empty'){
+      if(this.selected.row<this.destination.x){
+        for(let i=this.selected.row;i<=this.destination.x;i++){
+          if(this.grid[i][this.destination.y]!=='empty'){
             return false;
           }
         }
         return true;
       }
-      if(this.selected.col>y){
-        for(let i=this.selected.col;i>=y;i--){
-          if(this.grid[x][i]!=='empty'){
+      if(this.selected.col>this.destination.y){
+        for(let i=this.selected.col;i>=this.destination.y;i--){
+          if(this.grid[this.destination.x][i]!=='empty'){
             return false;
           }
         }
         return true;
       }
-      if(this.selected.col<y){
-        for(let i=this.selected.col;i<=y;i++){
-          if(this.grid[x][i]!=='empty'){
+      if(this.selected.col<this.destination.y){
+        for(let i=this.selected.col;i<=this.destination.y;i++){
+          if(this.grid[this.destination.x][i]!=='empty'){
             return false;
           }
         }
