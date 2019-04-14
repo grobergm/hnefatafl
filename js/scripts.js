@@ -40,7 +40,7 @@ class Board{
         this.destination.x=x;
         this.destination.y=y;
       if(this.moveIsValid()){
-        this.checkCapture(x,y,piece);
+        this.checkCapture();
         this.changeTurn();
         this.grid[x][y]=this.selected.piece;
         this.selected={piece:'empty'};
@@ -65,52 +65,62 @@ class Board{
     }
   }
   checkCapture(){
-    console.log(this.grid);
     let x=this.destination.x;
     let y=this.destination.y;
-    if(this.selected.piece==='black'){
-      if(this.grid[x+1][y]==='white'&&this.grid[x+2][y]==='black'){
-        console.log('capture');
-        this.grid[x+1][y]='empty';
-        let captured=document.getElementById(`r${x+1}c${y}`);
-        captured.setAttribute('class','empty');
-      }
-      if(this.grid[x-1][y]==='white'&&this.grid[x-2][y]==='black'){
-        console.log('capture');
-        this.grid[x-1][y]='empty';
-        let captured=document.getElementById(`r${x-1}c${y}`);
-        captured.setAttribute('class','empty');
-      }
-      if(this.grid[x][y+1]==='white'&&this.grid[x][y+2]==='black'){
-        console.log('capture');
+
+    if(this.turn==='black'){
+      console.log("black turn");
+        if(x<9 && this.grid[x+1][y]==='white' && this.grid[x+2][y]==='black'){
+          console.log('capture bottom',this.grid[x+1][y]);
+          this.grid[x+1][y]='empty';
+          let captured=document.getElementById(`r${x+1}c${y}`);
+          captured.setAttribute('class','empty');
+        }
+        if(x>1 && this.grid[x-1][y]==='white' && this.grid[x-2][y]==='black'){
+          console.log('capture top',this.grid[x-1][y]);
+          this.grid[x-1][y]='empty';
+          let captured=document.getElementById(`r${x-1}c${y}`);
+          captured.setAttribute('class','empty');
+        }
+
+      if(y<9 && this.grid[x][y+1]==='white' && this.grid[x][y+2]==='black'){
+        console.log('capture right',this.grid[x][y+1]);
         this.grid[x][y+1]='empty';
         let captured=document.getElementById(`r${x}c${y+1}`);
         captured.setAttribute('class','empty');
       }
-      if(this.grid[x][y-1]==='white'&&this.grid[x][y-2]==='black'){
-        console.log('capture');
-
+      if(y>1 && this.grid[x][y-1]==='white' && this.grid[x][y-2]==='black'){
+        console.log('capture left',this.grid[x][y-1]);
         this.grid[x][y-1]='empty';
         let captured=document.getElementById(`r${x}c${y-1}`);
         captured.setAttribute('class','empty');
       }
-    } else if(this.selected.piece==='white'||'king'){
-      if(this.grid[x+1][y]==='black'&&this.grid[x+2][y]==='white'){
+    } else if(this.turn==='white'){
+      console.log("white turn");
+      if(x<9 && this.grid[x+1][y]==='black' && this.grid[x+2][y]==='white'||this.grid[x+2][y]==='king'){
+        console.log('capture bottom',this.grid[x+1][y]);
+
         this.grid[x+1][y]='empty';
         let captured=document.getElementById(`r${x+1}c${y}`);
         captured.setAttribute('class','empty');
       }
-      if(this.grid[x-1][y]==='black'&&this.grid[x-2][y]==='white'){
+      if(x>1 && this.grid[x-1][y]==='black' && this.grid[x-2][y]==='white'||this.grid[x-2][y]==='king'){
+        console.log('capture top',this.grid[x-1][y]);
+
         this.grid[x-1][y]='empty';
         let captured=document.getElementById(`r${x-1}c${y}`);
         captured.setAttribute('class','empty');
       }
-      if(this.grid[x][y+1]==='black'&&this.grid[x][y+2]==='white'){
+      if(y<9 && this.grid[x][y+1]==='black' && this.grid[x][y+2]==='white'||this.grid[x][y+2]==='king'){
+        console.log('capture right',this.grid[x][y+1]);
+
         this.grid[x][y+1]='empty';
         let captured=document.getElementById(`r${x}c${y+1}`);
         captured.setAttribute('class','empty');
       }
-      if(this.grid[x][y-1]==='black'&&this.grid[x][y-2]==='white'){
+      if(y>1 && this.grid[x][y-1]==='black' && this.grid[x][y-2]==='white'||this.grid[x][y-2]==='king'){
+        console.log('capture left',this.grid[x][y-1]);
+
         this.grid[x][y-1]='empty';
         let captured=document.getElementById(`r${x}c${y-1}`);
         captured.setAttribute('class','empty');
