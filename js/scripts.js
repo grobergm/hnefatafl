@@ -43,6 +43,7 @@ class Board{
         this.checkCapture();
         this.changeTurn();
         this.grid[x][y]=this.selected.piece;
+        this.checkIfKingCaptured();
         this.selected={piece:'empty'};
         this.destination={};
         this.updateView(x,y,cell,piece);
@@ -84,8 +85,6 @@ class Board{
           captured.setAttribute('class','empty');
           }
         }
-
-
       if(y<9){
         if(this.grid[x][y+1]==='white' && this.grid[x][y+2]==='black'){
         console.log('capture right',this.grid[x][y+1]);
@@ -157,6 +156,10 @@ class Board{
       if(this.selected.piece!=='king' && this.grid[this.destination.x][this.destination.y]==='goal'){
         return false;
       }
+      if(this.selected.piece==='king' && this.grid[this.destination.x][this.destination.y]==='goal'){
+        window.location.replace('defenseWins.html');
+        return true;
+      }
       if(this.selected.row>this.destination.x){
         for(let i=this.selected.row;i>=this.destination.x;i--){
           if(this.grid[i][this.destination.y]!=='empty'){
@@ -209,6 +212,18 @@ class Board{
     } else {
       board.setAttribute('class','noneSelected');
     }
+  }
+  checkIfKingCaptured(){
+    for(let x=0;x<=10;x++){
+      for(let y=0;y<=10;y++){
+        if(this.grid[x][y]==='king'){
+          console.log('king is at',x,y)
+          if(this.grid[x+1][y]==='black'&&this.grid[x-1][y]==='black'&&this.grid[x][y+1]==='black'&&this.grid[x][y-1]==='black'){
+            window.location.replace('offenseWins.html');
+          }
+        }
+      };
+    };
   }
 }
 let newGame= new Board();
