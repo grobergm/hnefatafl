@@ -46,7 +46,6 @@ class Board{
         this.selected={piece:'empty'};
         this.destination={};
         this.updateView(x,y,cell,piece);
-
       } else{
         this.grid[this.selected.row][this.selected.col]=this.selected.piece;
         this.updateView(this.selected.row,this.selected.col,this.selected.cell);
@@ -67,66 +66,80 @@ class Board{
   checkCapture(){
     let x=this.destination.x;
     let y=this.destination.y;
-
     if(this.turn==='black'){
       console.log("black turn");
-        if(x<9 && this.grid[x+1][y]==='white' && this.grid[x+2][y]==='black'){
+        if(x<9){
+          if(this.grid[x+1][y]==='white' && this.grid[x+2][y]==='black'){
           console.log('capture bottom',this.grid[x+1][y]);
           this.grid[x+1][y]='empty';
           let captured=document.getElementById(`r${x+1}c${y}`);
           captured.setAttribute('class','empty');
+          }
         }
-        if(x>1 && this.grid[x-1][y]==='white' && this.grid[x-2][y]==='black'){
+        if(x>1){
+          if(this.grid[x-1][y]==='white' && this.grid[x-2][y]==='black'){
           console.log('capture top',this.grid[x-1][y]);
           this.grid[x-1][y]='empty';
           let captured=document.getElementById(`r${x-1}c${y}`);
           captured.setAttribute('class','empty');
+          }
         }
 
-      if(y<9 && this.grid[x][y+1]==='white' && this.grid[x][y+2]==='black'){
+
+      if(y<9){
+        if(this.grid[x][y+1]==='white' && this.grid[x][y+2]==='black'){
         console.log('capture right',this.grid[x][y+1]);
         this.grid[x][y+1]='empty';
         let captured=document.getElementById(`r${x}c${y+1}`);
         captured.setAttribute('class','empty');
+        }
       }
-      if(y>1 && this.grid[x][y-1]==='white' && this.grid[x][y-2]==='black'){
+      if(y>1){
+        if(this.grid[x][y-1]==='white' && this.grid[x][y-2]==='black'){
         console.log('capture left',this.grid[x][y-1]);
         this.grid[x][y-1]='empty';
         let captured=document.getElementById(`r${x}c${y-1}`);
         captured.setAttribute('class','empty');
+        }
       }
     } else if(this.turn==='white'){
       console.log("white turn");
-      if(x<9 && this.grid[x+1][y]==='black' && this.grid[x+2][y]==='white'||this.grid[x+2][y]==='king'){
+      if(x<9){
+        if(this.grid[x+1][y]==='black' && this.grid[x+2][y]==='white'||this.grid[x+2][y]==='king'){
         console.log('capture bottom',this.grid[x+1][y]);
 
         this.grid[x+1][y]='empty';
         let captured=document.getElementById(`r${x+1}c${y}`);
         captured.setAttribute('class','empty');
+        }
       }
-      if(x>1 && this.grid[x-1][y]==='black' && this.grid[x-2][y]==='white'||this.grid[x-2][y]==='king'){
+      if(x>1){
+        if(this.grid[x-1][y]==='black' && this.grid[x-2][y]==='white'||this.grid[x-2][y]==='king'){
         console.log('capture top',this.grid[x-1][y]);
-
         this.grid[x-1][y]='empty';
         let captured=document.getElementById(`r${x-1}c${y}`);
         captured.setAttribute('class','empty');
+        }
       }
-      if(y<9 && this.grid[x][y+1]==='black' && this.grid[x][y+2]==='white'||this.grid[x][y+2]==='king'){
+      if(y<9){
+        if(this.grid[x][y+1]==='black' && this.grid[x][y+2]==='white'||this.grid[x][y+2]==='king'){
         console.log('capture right',this.grid[x][y+1]);
 
         this.grid[x][y+1]='empty';
         let captured=document.getElementById(`r${x}c${y+1}`);
         captured.setAttribute('class','empty');
+        }
       }
-      if(y>1 && this.grid[x][y-1]==='black' && this.grid[x][y-2]==='white'||this.grid[x][y-2]==='king'){
+      if(y>1){
+        if(this.grid[x][y-1]==='black' && this.grid[x][y-2]==='white'||this.grid[x][y-2]==='king'){
         console.log('capture left',this.grid[x][y-1]);
 
         this.grid[x][y-1]='empty';
         let captured=document.getElementById(`r${x}c${y-1}`);
         captured.setAttribute('class','empty');
+        }
       }
     }
-
   }
 
   changeTurn(){
@@ -141,6 +154,9 @@ class Board{
 
   moveIsValid(){
     if(this.destination.x===this.selected.row || this.destination.y===this.selected.col){
+      if(this.selected.piece!=='king' && this.grid[this.destination.x][this.destination.y]==='goal'){
+        return false;
+      }
       if(this.selected.row>this.destination.x){
         for(let i=this.selected.row;i>=this.destination.x;i--){
           if(this.grid[i][this.destination.y]!=='empty'){
