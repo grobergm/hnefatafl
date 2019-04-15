@@ -96,7 +96,11 @@ a:hover{
   background-image: url("../img/goal.jpg");
 }
 
-@media screen and (min-width:800px){
+@media screen and (min-width:500px){
+  #board {
+    height:500px;
+    width:500px;
+  }
   h1{
     font-size:5rem;
   }
@@ -105,16 +109,5 @@ a:hover{
   }
   p {
     font-size:1.5rem;
-  }
-  .selectedWhite {
-    cursor: url("../img/selectedWhite.png"), auto;
-  }
-
-  .selectedBlack {
-    cursor: url("../img/selectedBlack.png"), auto;
-  }
-
-  .selectedKing {
-    cursor: url("../img/selectedKing.png"), auto;
   }
 }
